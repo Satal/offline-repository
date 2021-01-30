@@ -23,7 +23,7 @@ A pattern for offline CentOS repositories using Ansible
 
 There are many reason why an organisation may wish to have environments where there is no Internet access. These range from wanting to secure
 
-Maintaining your environments in an offline environment comes with many issues, this is why I felt it worth creating this repository to provide a pattern for developing 
+Maintaining your environments in an offline environment comes with many issues, this is why I felt it worth creating this repository to provide a pattern for achieving this.
 
 ![Diagram of structure](images/end-to-end.png "Diagram of structure")
 
