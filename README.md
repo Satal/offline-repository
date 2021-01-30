@@ -9,6 +9,7 @@ A pattern for offline CentOS repositories using Ansible
 - [About The Project](#about-the-project)
 - [Structure](#structure)
   - [Internet facing CentOS Repository](#internet-facing-centos-repository)
+  - [Network Diode](#network-diode)
   - [Central Offline CentOS Repository](#central-offline-centos-repository)
   - [Satellite Repositories](#satellite-repositories)
   - [Built With](#built-with)
@@ -32,6 +33,11 @@ Maintaining your environments in an offline environment comes with many issues, 
 ### Internet facing CentOS Repository
 
 The Internet facing CentOS Repository will be used for downloading the repository files which can then be moved into the environment that doesn't have an Internet connection.ark
+
+<!-- NETWORK DIODE -->
+### Network Diode
+
+The network diode provides a mechanism for one way communication. We won't really go into this as the creation and management of diodes is beyond my skillset.
 
 <!-- CENTRAL OFFLINE CENTOS REPOSITORY -->
 ### Central Offline CentOS Repository
