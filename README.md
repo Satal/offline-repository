@@ -13,7 +13,6 @@ A pattern for offline CentOS repositories using Ansible
   - [Satellite Repositories](#satellite-repositories)
   - [Built With](#built-with)
 - [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
 - [License](#license)
@@ -54,7 +53,9 @@ While you can implement this pattern using any approach that you like, I will be
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
+COMING SOON ^_^
+
+<!-- This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
@@ -63,7 +64,7 @@ This is an example of how to list things you need to use the software and how to
 * npm
   ```sh
   npm install npm@latest -g
-  ```
+  ``` -->
 
 <!-- ROADMAP -->
 ## Roadmap
