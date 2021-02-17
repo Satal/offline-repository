@@ -1,0 +1,6 @@
+---
+repo_location: /data/repos # Don't put last slash
+repo_repos:
+  - BaseOS
+  - AppStream
+  - extras

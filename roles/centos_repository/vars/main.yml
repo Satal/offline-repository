@@ -1,0 +1,4 @@
+---
+
+repo_location: /data/repos # Don't put last slash
+repo_hostname: 'repo'

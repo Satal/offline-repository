@@ -1,0 +1,7 @@
+---
+
+- name: Copy update-repo daily cron script
+  template:
+    src: update-repo.j2
+    dest: /etc/cron.daily/update-repo
+    mode: 755
