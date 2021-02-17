@@ -14,6 +14,11 @@ There are times that it is necessary to have local CentOS repositories that are 
   - [Offline CentOS Clients](#offline-centos-clients)
   - [Satellite Repositories](#satellite-repositories)
   - [Satellite Clients](#satellite-clients)
+- [Roles](#roles)
+  - [centos_repository](#centos_repository)
+  - [offline_repository](#offline_repository)
+  - [online_repository](#online_repository)
+  - [satellite_repository](#satellite_repository)
 - [Built With](#built-with)
 - [Getting Started](#getting-started)
 - [Roadmap](#roadmap)
@@ -62,13 +67,70 @@ It would also be possible for us to achieve this by doing some funny business wi
 <!-- SATELLITE REPOSITORIES -->
 ### Satellite Repositories
 
-If you have further segregation then it may be necessary for you to provide additional satellite repositories. While this could be done in the same manner as the Internet facing CentOS Repository we are going to take a different approach for this.
+If you have further segregation then it may be necessary for you to provide additional satellite repositories. While this could be done in the same manner as the [Internet facing CentOS Repository](#internet-facing-centos-repository) we are going to take a different approach for this.
+
+We could just have our Satllite Repositories pulling their updates from the [Central Offline CentOS Repository](#central-offline-centos-repository) but often, when you have this further segregation of networks you are controlling what can come in/out of the area. For this reason, we are going to take the approach of having our Central Offline CentOS Repository push the updates to the Satellite Repositories.
+
+The push to the Satellite repositories will be carried out using rsync, utilising SSH keys to avoid using passwords. As this is a push operation the configuration for doing this is done as part of the offline_repository role.
 
 <!-- SATELLITE CLIENTS -->
 ### Satellite Clients
 
-Exactly the same as our Offline CentOS Clients, except that we will be pointing them to the Satellite Repositories. We will need to do the same here as far as configuring the Yum repository location but because we will have different Satellite Repositories, when deploying our config we will need to specify the location correctly for each area.
+Exactly the same as our Offline CentOS Clients, except that we will be pointing them to the [Satellite Repositories](#satellite-repositories). We will need to do the same here as far as configuring the Yum repository location but because we will have different Satellite Repositories, when deploying our config we will need to specify the location correctly for each area.
 
+<!-- ROLES -->
+## Roles
+
+<!-- CENTOS_REPOSITORY -->
+### centos_repository
+
+This role covers the main activities of turning the CentOS box into a repository.
+
+<!-- Vars for centos_repository -->
+#### Vars for centos_repository<!-- omit in toc -->
+
+| Variable name | Type   | Description                                                                                                                                                                                                              |
+| :------------ | :----- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| repo_hostname | String | The hostname for the repository, this is used to configure nginx to expect connections using this hostname. The role will also add in the IP address for the repository automatically so you don't need to include this. |
+| repo_location | String | The repo location is the place where the repository will be stored on the repository box. It is important that you ensure wherever this is, there is adequate space for the repository to be downloaded.                 |
+
+<!-- OFFLINE_REPOSITORY -->
+### offline_repository
+
+This role is for the [Central Offline CentOS Repository](#central-offline-centos-repository)
+
+<!-- Vars for offline_repository -->
+#### Vars for offline_repository<!-- omit in toc -->
+
+| Variable name   | Type         | Description                                                                                                                                                  |
+| :-------------- | :----------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| satellite_repos | String Array | The collection of Satellite Repositories where the Central Repository should push the updates to. Ommit if you don't want to have any satellite repositories |
+| satellite_user  | String       | The user that will be used for SSHing into the Satellite Repositories.                                                                                       |
+
+<!-- ONLINE_REPOSITORY -->
+### online_repository
+
+This role is for the [Internet facing CentOS Repository](#internet-facing-centos-repository). It includes the necessary tasks to have the box download the updates from the Internet and make them available in a local repository using the [centos_repository](#centos_repository) role.
+
+<!-- Vars for online_repository -->
+#### Vars for online_repository<!-- omit in toc -->
+
+| Variable name | Type         | Description                                                                                                                                                                                              |
+| :------------ | :----------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| repo_location | String       | The repo location is the place where the repository will be stored on the repository box. It is important that you ensure wherever this is, there is adequate space for the repository to be downloaded. |
+| repo_repos    | String Array | The repositories that should be downloaded to make them available offline (i.e. BaseOS, AppStream, extras)                                                                                               |
+
+<!-- SATELLITE_REPOSITORY -->
+### satellite_repository
+
+<!-- Vars for satellite_repository -->
+#### Vars for satellite_repository<!-- omit in toc -->
+
+| Variable name | Type | Description |
+| :------------ | :--- | :---------- |
+|               |
+
+<!-- BUILT WITH -->
 ## Built With
 
 While you can implement this pattern using any approach that you like, I will be using the following technologies.

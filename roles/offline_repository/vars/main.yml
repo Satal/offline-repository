@@ -1,0 +1,7 @@
+---
+
+satellite_repos:
+  - satellite01
+  - satellite02
+
+satellite_user: sa_repo # repo service account
