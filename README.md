@@ -36,7 +36,7 @@ Maintaining your environments in an offline environment comes with many issues, 
 
 ## Structure
 
-Let's first start by understanding the parts of this patterna and the role they play.
+Let's first start by understanding the parts of this pattern and the role they play.
 
 <!-- INTERNET FACING CENTOS REPOSITORY -->
 ### Internet facing CentOS Repository
