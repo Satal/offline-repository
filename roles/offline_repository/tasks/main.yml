@@ -1,0 +1,12 @@
+---
+
+- name: Configure for Satellite repositories
+  block:
+
+    - name: Deploy template for pushing updates to satellites
+      template:
+        src: push_updates_to_satellites.j2
+        dest: /etc/cron.daily/push_updates_to_satellites
+        mode: 755
+    
+  when: satellites is iterable and (satellites | length > 0) # Only perform when there are sattlite repositories
