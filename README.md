@@ -1,17 +1,17 @@
 <!-- omit in toc -->
-# Offline CentOS Repository
+# Offline Update Repository
 
-There are times that it is necessary to have local CentOS repositories that are not connected to the Internet but still need to be able to share the updates. This GitHub repository is designed to provide people with a pattern that they could apply to achieve this.
+There are times that it is necessary to have local update repositories that are not connected to the Internet but still need to be able to share the updates. This GitHub repository is designed to provide people with a pattern that they could apply to achieve this.
 
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents <!-- omit in toc -->
 
 - [About The Project](#about-the-project)
 - [Structure](#structure)
-  - [Internet facing CentOS Repository](#internet-facing-centos-repository)
+  - [Internet facing Repository](#internet-facing-repository)
   - [Network Diode](#network-diode)
-  - [Central Offline CentOS Repository](#central-offline-centos-repository)
-  - [Offline CentOS Clients](#offline-centos-clients)
+  - [Central Offline Repository](#central-offline-repository)
+  - [Offline Clients](#offline-clients)
   - [Satellite Repositories](#satellite-repositories)
   - [Satellite Clients](#satellite-clients)
 - [Roles](#roles)
@@ -38,10 +38,10 @@ Maintaining your environments in an offline environment comes with many issues, 
 
 Let's first start by understanding the parts of this pattern and the role they play.
 
-<!-- INTERNET FACING CENTOS REPOSITORY -->
-### Internet facing CentOS Repository
+<!-- INTERNET FACING REPOSITORY -->
+### Internet facing Repository
 
-The Internet facing CentOS Repository will be used for downloading the repository files from the standard repository location. Once these files have been downloaded they can be moved into the offline environment.
+The Internet facing Repository will be used for downloading the repository files from the standard repository location. Once these files have been downloaded they can be moved into the offline environment.
 
 We will be downloading all the repository files by using reposync. This will allow us to mirror the contents and therefore avoid the problem of always adding the new files to the existing, which would mean the requires disk space will increase faster.
 
@@ -52,13 +52,13 @@ It would also be possible for us to do this through rsync if we wanted.
 
 The network diode provides a mechanism for one way communication. We won't be going into the diode or how the transfer from one system to the other happens as this will be specific to the environment you work in.
 
-<!-- CENTRAL OFFLINE CENTOS REPOSITORY -->
-### Central Offline CentOS Repository
+<!-- CENTRAL OFFLINE REPOSITORY -->
+### Central Offline Repository
 
-The offline CentOS Repository is the main location where all the update files are stored for the offline environment.
+The offline Repository is the main location where all the update files are stored for the offline environment.
 
-<!-- OFFLINE CENTOS CLIENTS -->
-### Offline CentOS Clients
+<!-- OFFLINE CLIENTS -->
+### Offline Clients
 
 There's very little point in having an offline repository if there are no clients that will be using the repository. To do this we will need to update the Yum configuration for these boxes to point to our repository rather than the default online CentOS one.
 
@@ -67,16 +67,16 @@ It would also be possible for us to achieve this by doing some funny business wi
 <!-- SATELLITE REPOSITORIES -->
 ### Satellite Repositories
 
-If you have further segregation then it may be necessary for you to provide additional satellite repositories. While this could be done in the same manner as the [Internet facing CentOS Repository](#internet-facing-centos-repository) we are going to take a different approach for this.
+If you have further segregation then it may be necessary for you to provide additional satellite repositories. While this could be done in the same manner as the [Internet facing Repository](#internet-facing-repository) we are going to take a different approach for this.
 
-We could just have our Satllite Repositories pulling their updates from the [Central Offline CentOS Repository](#central-offline-centos-repository) but often, when you have this further segregation of networks you are controlling what can come in/out of the area. For this reason, we are going to take the approach of having our Central Offline CentOS Repository push the updates to the Satellite Repositories.
+We could just have our Satllite Repositories pulling their updates from the [Central Offline Repository](#central-offline-repository) but often, when you have this further segregation of networks you are controlling what can come in/out of the area. For this reason, we are going to take the approach of having our Central Offline Repository push the updates to the Satellite Repositories.
 
 The push to the Satellite repositories will be carried out using rsync, utilising SSH keys to avoid using passwords. As this is a push operation the configuration for doing this is done as part of the offline_repository role.
 
 <!-- SATELLITE CLIENTS -->
 ### Satellite Clients
 
-Exactly the same as our Offline CentOS Clients, except that we will be pointing them to the [Satellite Repositories](#satellite-repositories). We will need to do the same here as far as configuring the Yum repository location but because we will have different Satellite Repositories, when deploying our config we will need to specify the location correctly for each area.
+Exactly the same as our Offline Clients, except that we will be pointing them to the [Satellite Repositories](#satellite-repositories). We will need to do the same here as far as configuring the Yum repository location but because we will have different Satellite Repositories, when deploying our config we will need to specify the location correctly for each area.
 
 <!-- ROLES -->
 ## Roles
